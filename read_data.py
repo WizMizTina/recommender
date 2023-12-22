@@ -1,6 +1,7 @@
 import csv
 from sqlalchemy.exc import IntegrityError
-from models import Movie, MovieGenre
+from models import Movie, MovieGenre, Tags, Links
+from datetime import datetime
 
 def check_and_read_data(db):
     # check if we have movies in the database
@@ -30,3 +31,55 @@ def check_and_read_data(db):
                 if count % 100 == 0:
                     print(count, " movies read")
 
+def check_and_read_data_tags(db):
+    # check if we have movies in the database
+    # read data if database is empty
+    if Tags.query.count() == 0:
+        # read tags from csv
+        with open('data/tags.csv', newline='', encoding='utf8') as csvfile:
+            reader = csv.reader(csvfile, delimiter=',')
+            count = 0
+            for row in reader:
+                if count > 0:
+                    try:
+                        id = row[1]
+                        tag = row[2]
+                        movie_id = id
+                        timestamp = datetime.fromtimestamp(int(row[3]))
+                        tags = Tags(id=id,movie_id = movie_id, tag= tag, timestamp= timestamp)
+                        db.session.add(tags)
+                        db.session.commit()  # save data to database
+                    except IntegrityError:
+                        print("Ignoring duplicate movie: " + id)
+                        db.session.rollback()
+                        pass
+                count += 1
+                if count % 100 == 0:
+                    print(count, " movies read")
+
+
+def check_and_read_data_links(db):
+    # check if we have movies in the database
+    # read data if database is empty
+    if Links.query.count() == 0:
+        # read tags from csv
+        with open('data/links.csv', newline='', encoding='utf8') as csvfile:
+            reader = csv.reader(csvfile, delimiter=',')
+            count = 0
+            for row in reader:
+                if count > 0:
+                    try:
+                        id = row[0]
+                        movie_id = id
+                        imdb_id = row[1]
+                        tmdb_id = row[2]
+                        links = Links(id= id, movie_id= movie_id, imdb_id= imdb_id, tmdb_id= tmdb_id)
+                        db.session.add(links)
+                        db.session.commit()  # save data to database
+                    except IntegrityError:
+                        print("Ignoring duplicate movie: " + movie_id)
+                        db.session.rollback()
+                        pass
+                count += 1
+                if count % 100 == 0:
+                    print(count, " movies read")

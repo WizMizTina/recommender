@@ -4,7 +4,7 @@ from flask import Flask, render_template
 from flask_user import login_required, UserManager
 
 from models import db, User, Movie, MovieGenre
-from read_data import check_and_read_data
+from read_data import check_and_read_data, check_and_read_data_tags, check_and_read_data_links
 
 # Class-based application configuration
 class ConfigClass(object):
@@ -37,6 +37,8 @@ def initdb_command():
     global db
     """Creates the database tables."""
     check_and_read_data(db)
+    check_and_read_data_tags(db)
+    check_and_read_data_links(db)
     print('Initialized the database.')
 
 # The Home page is accessible to anyone

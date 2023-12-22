@@ -6,10 +6,26 @@
     {% for m in movies %}
         <div class="panel panel-default">
             <div class="panel-heading"><b>{{ m.title }}</b></div>
-            <div class="panel-body">
+            <div class="panel-body">Genres
                 <p>
                     {% for g in m.genres %}
                         <span class="label label-default">{{ g.genre }}</span>
+                    {% endfor %}
+                </p>
+            </div>
+            <div class="panel-body">Tags
+                <p>
+                    {% for t in m.tags %}
+                        <span class="label label-default">{{ t.tag}}</span>
+                    {% endfor %}
+                </p>
+            </div>
+            <div class="panel-body">Links
+                <p>
+                    {% for l in m.links%}
+                    <a href="http://www.imdb.com/title/tt0{{l.imdb_id }}" target="_blank" class="label label-default">IMDb Link</a>
+                    <a href="http://www.themoviedb.org/movie/{{l.tmdb_id}}" target="_blank" class="label label-default">Moviedb Link</a>
+                    <a href="http://www.movielens.org/movies/{{l.movie_id }}" target="_blank" class="label label-default">Movielens Link</a>
                     {% endfor %}
                 </p>
             </div>

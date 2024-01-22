@@ -3,41 +3,67 @@
 <div class="container">
     <h2>Movies</h2>
 
-    {% for m in movies %}
-        <div class="panel panel-default">
-            <div class="panel-heading"><b>{{ m.title }}</b></div>
-            <div class="panel-body">Genres
-                <p>
-                    {% for g in m.genres %}
-                        <span class="label label-default">{{ g.genre }}</span>
-                    {% endfor %}
-                </p>
+    <form method="post" action="{{ url_for('movies_page') }}">
+        <label>Select Genre(s):</label>
+        {% for genre in genres %}
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" name="selected_genres" value="{{ genre }}">
+                    {{ genre }}
+                </label>
             </div>
-            <div class="panel-body">Tags
-                <p>
-                    {% for t in m.tags %}
-                        <span class="label label-default">{{ t.tag}}</span>
-                    {% endfor %}
-                </p>
+        {% endfor %}
+        <button type="submit">Filter</button>
+    </form>
+
+    <form method="post" action="{{ url_for('show_movies_results') }}">
+        {% for m in movies %}
+            <div class="panel panel-default">
+                <div class="panel-heading"><b>{{ m.title }}</b></div>
+                <div class="panel-body">Genres
+                    <p>
+                        {% for g in m.genres %}
+                            <span class="label label-default">{{ g.genre }}</span>
+                        {% endfor %}
+                    </p>
+                </div>
+                <div class="panel-body">Tags
+                    <p>
+                        {% for t in m.tags %}
+                            <span class="label label-default">{{ t.tag}}</span>
+                        {% endfor %}
+                    </p>
+                </div>
+                <div class="panel-body">Links
+                    <p>
+                        {% for l in m.links%}
+                        <a href="http://www.imdb.com/title/tt0{{l.imdb_id }}" target="_blank" class="label label-default">IMDb Link</a>
+                        <a href="http://www.themoviedb.org/movie/{{l.tmdb_id}}" target="_blank" class="label label-default">Moviedb Link</a>
+                        <a href="http://www.movielens.org/movies/{{l.movie_id }}" target="_blank" class="label label-default">Movielens Link</a>
+                        {% endfor %}
+                    </p>
+                </div>
+                <div class="panel-footer">Rate:
+                    <label for="rating_{{ m.id }}">Rate (1-5):</label>
+                    <select name="rating_{{ m.id }}" id="rating_{{ m.id }}" >
+                        <option value="" selected disabled hidden>No Rating</option>
+                        <option value="5">5 - Excellent</option>
+                        <option value="4">4 - Very Good</option>
+                        <option value="3">3 - Good</option>
+                        <option value="2">2 - Fair</option>
+                        <option value="1">1 - Poor</option>
+                    </select>
+                </div>
             </div>
-            <div class="panel-body">Links
-                <p>
-                    {% for l in m.links%}
-                    <a href="http://www.imdb.com/title/tt0{{l.imdb_id }}" target="_blank" class="label label-default">IMDb Link</a>
-                    <a href="http://www.themoviedb.org/movie/{{l.tmdb_id}}" target="_blank" class="label label-default">Moviedb Link</a>
-                    <a href="http://www.movielens.org/movies/{{l.movie_id }}" target="_blank" class="label label-default">Movielens Link</a>
-                    {% endfor %}
-                </p>
-            </div>
-              <div class="panel-footer">Rate:
-                  <a href="#" class="card-link">1</a>
-                  <a href="#" class="card-link">2</a>
-                  <a href="#" class="card-link">3</a>
-                  <a href="#" class="card-link">4</a>
-                  <a href="#" class="card-link">5</a> Stars
-              </div>
-        </div>
-    {% endfor %}
+
+        {% endfor %}
+
+        <button type="submit">Show</button>
+    </form>
+
+   
 </div>
+
+
 
 {% endblock %}

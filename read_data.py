@@ -32,7 +32,7 @@ def check_and_read_data(db):
                     print(count, " movies read")
 
 def check_and_read_data_tags(db):
-    # check if we have movies in the database
+    # check if we have tags in the database
     # read data if database is empty
     if Tags.query.count() == 0:
         # read tags from csv
@@ -55,11 +55,11 @@ def check_and_read_data_tags(db):
                         pass
                 count += 1
                 if count % 100 == 0:
-                    print(count, " movies read")
+                    print(count, " tags read")
 
 
 def check_and_read_data_links(db):
-    # check if we have movies in the database
+    # check if we have links in the database
     # read data if database is empty
     if Links.query.count() == 0:
         # read tags from csv
@@ -82,10 +82,10 @@ def check_and_read_data_links(db):
                         pass
                 count += 1
                 if count % 100 == 0:
-                    print(count, " movies read")
+                    print(count, " links read")
 
 def check_and_read_data_ratings(db):
-    # check if we have movies in the database
+    # check if we have ratings in the database
     # read data if database is empty
     if Ratings.query.count() == 0:
         # read tags from csv
@@ -108,4 +108,4 @@ def check_and_read_data_ratings(db):
                         pass
                 count += 1
                 if count % 100 == 0:
-                    print(count, " movies read")
+                    print(count, " ratings read")

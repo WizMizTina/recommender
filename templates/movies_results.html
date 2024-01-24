@@ -1,6 +1,59 @@
-<form method="post" action="{{ url_for('submit_ratings') }}">
-<h2>Rated Movies</h2>
-<p>Genres: {{ genres }}</p>
-<p>Movies Reviewed: {{ rated_movies }}</p>
-<p>Movies Recommended: {{ recommended_movies }}</p>
+{% extends "flask_user_layout.html" %}
+{% block content %}
+
+    <h2>Rated Movies</h2>
+    <div class="panel panel-default">
+        <div class="panel-heading"><b>Genres</b></div>
+        <div class="panel-body" style="white-space: nowrap; overflow-x: auto;">
+            {% for genre in genres %}
+                <span class="genre">{{ genre }}</span>
+            {% endfor %}
+        </div>
+    </div>
+
+
+
+    <div class="panel panel-default">
+        <div class="panel-heading"><b>Rated Movies</b></div>
+        <div class="panel-body" style="white-space: nowrap; overflow-x: auto;">
+            {% for mov in rated_movies %}
+                <span class="genre">{{ mov }}</span>
+            {% endfor %}
+        </div>
+    </div>
+
+
+    <h2>Recommended Movies</h2>
+    {% for m in rec_movies %}
+    <div class="panel panel-default">
+        <div class="panel-heading"><b>{{ m.title }}</b></div>
+        <div class="panel-body">Genres
+            <p>
+                {% for g in m.genres %}
+                <span class="label label-default">{{ g.genre }}</span>
+                {% endfor %}
+            </p>
+        </div>
+        <div class="panel-body">Tags
+            <p>
+                {% for t in m.tags %}
+                <span class="label label-default">{{ t.tag}}</span>
+                {% endfor %}
+            </p>
+        </div>
+        <div class="panel-body">Links
+            <p>
+                {% for l in m.links%}
+                <a href="http://www.imdb.com/title/tt0{{l.imdb_id }}" target="_blank" class="label label-default">IMDb
+                    Link</a>
+                <a href="http://www.themoviedb.org/movie/{{l.tmdb_id}}" target="_blank"
+                    class="label label-default">Moviedb Link</a>
+                <a href="http://www.movielens.org/movies/{{l.movie_id }}" target="_blank"
+                    class="label label-default">Movielens Link</a>
+                {% endfor %}
+            </p>
+        </div>
+    </div>
+    {% endfor %}
 </form>
+{% endblock %}

@@ -1,7 +1,17 @@
 {% extends "flask_user_layout.html" %}
 {% block content %}
+<style>
+    /* Custom styles for links and other elements */
+    .label.label-default {
+        color: #d0ff00; /* color for labels */
+    }
+
+    /* Additional creative styles can be added here */
+
+</style>
+
 <div class="container">
-    <h2>Movies</h2>
+    <h2>Genres</h2>
 
     <form method="post" action="{{ url_for('movies_page') }}">
         <label>Select Genre(s):</label>
@@ -15,9 +25,14 @@
         {% endfor %}
         <button type="submit">Filter</button>
     </form>
-
+    <h2>Movies</h2>
     <form method="post" action="{{ url_for('show_movies_results') }}">
-        {% for m in movies %}
+    <label>Rate as many movies that you have seen as possible:</label>
+
+    {% for i in range(0, movies|length, 10) %}
+    <div id="page_{{ loop.index }}" class="movie-page {% if loop.index != 1 %}hidden{% endif %}">
+
+       {% for m in movies[i:i+10] %}
             <div class="panel panel-default">
                 <div class="panel-heading"><b>{{ m.title }}</b></div>
                 <div class="panel-body">Genres
@@ -57,13 +72,35 @@
             </div>
 
         {% endfor %}
+    </div>
+    {% endfor %}
 
-        <button type="submit">Show</button>
+    <div class="pagination-buttons">
+        {% for i in range(1, (movies|length // 10) + 1) %}
+        <button class="page-button" onclick="return showPage({{ i }})">{{ i }}</button>
+
+
+
+        {% endfor %}
+    </div>
+        <button type="submit">Show Recommendations</button>
     </form>
 
    
+    
 </div>
 
-
+<script>
+    function showPage(pageNumber) {
+        var pages = document.querySelectorAll('.movie-page');
+        for (var i = 0; i < pages.length; i++) {
+            pages[i].classList.add('hidden');
+        }
+        document.getElementById('page_' + pageNumber).classList.remove('hidden');
+        
+        // Ensure form is not submitted
+        return false;
+    }
+</script>
 
 {% endblock %}

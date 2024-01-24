@@ -79,11 +79,11 @@ def movies_page():
     if request.method == 'POST':
         selected_genres = request.form.getlist('selected_genres')
         #Filter movies based on selected genres
-        movies = Movie.query.filter(Movie.genres.any(MovieGenre.genre.in_(selected_genres))).limit(100).all()
+        movies = Movie.query.filter(Movie.genres.any(MovieGenre.genre.in_(selected_genres))).limit(1000).all()
         session['selected_genres'] = selected_genres
     else:
         # Default behavior: Display the first 100 movies
-        movies = Movie.query.limit(100).all()
+        movies = Movie.query.limit(1000).all()
     rated_movies = []
     for m in movies:
         rating_key = f'rating_{m.id}'

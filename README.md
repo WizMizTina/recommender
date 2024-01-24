@@ -16,7 +16,7 @@ This is a recommender tool that recommends movies based on user rating and findi
 
 ## Running the Flask Search Engine:
 1. Install dependencies with **pip install -r requirements.txt**.
-2. Run the search engine by executing: **flask --app myapp**
+2. Run the search engine by executing: **flask --app recommender.py run**
 
 
 ## Resources Used:

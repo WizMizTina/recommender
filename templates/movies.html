@@ -27,7 +27,7 @@
     </form>
     <h2>Movies</h2>
     <form method="post" action="{{ url_for('show_movies_results') }}">
-    <label>Rate as many movies that you have seen as possible. Each page displays 10 movies and you can selct a page number below to view more movies. Afterwards click Show Recommedations to see the recommended movies based on your selections and ratings.</label>
+    <label>Rate as many movies that you have seen as possible. Each page displays 10 movies and you can select a page number below to view more movies. Afterwards click Show Recommendations to see the recommended movies based on your selections and ratings.</label>
 
     {% for i in range(0, movies|length, 10) %}
     <div id="page_{{ loop.index }}" class="movie-page {% if loop.index != 1 %}hidden{% endif %}">

@@ -51,7 +51,7 @@
     </div>
     {% block menu %}
     <div id="menu-div" class="with-margins">
-        <a href="/">{%trans%}Home page{%endtrans%}</a>
+        <a href="{{ url_for('home_page') }}">{%trans%}Home page{%endtrans%}</a>
     </div>
     {% endblock %}
     <hr class="no-margins"/>
